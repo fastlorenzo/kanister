@@ -253,6 +253,21 @@ stop-minishift:
 stop-kind:
 	@$(MAKE) run CMD="./build/local_kubernetes.sh stop_localkube"
 
+start-sftp:
+	@./build/local_sftp.sh start_sftp
+
+stop-sftp:
+	@./build/local_sftp.sh stop_sftp
+
+status-sftp:
+	@./build/local_sftp.sh status_sftp
+
+logs-sftp:
+	@./build/local_sftp.sh logs_sftp
+
+clean-sftp:
+	@./build/local_sftp.sh clean_sftp
+
 check:
 	@./build/check.sh
 

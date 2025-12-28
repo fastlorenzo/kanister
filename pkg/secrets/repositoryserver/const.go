@@ -26,6 +26,7 @@ const (
 	LocTypeGCS         LocType = "gcs"
 	LocTypeAzure       LocType = "azure"
 	LocTypeFilestore   LocType = "filestore"
+	LocTypeSFTP        LocType = "sftp"
 
 	// Location represents the storage location secret type for kopia repository server
 	Location corev1.SecretType = "secrets.kanister.io/storage-location"
@@ -45,6 +46,15 @@ const (
 	TypeKey          = "type"
 	// Location secret key to be used only for filestore location type
 	ClaimNameKey = "claimName"
+	// Location secret keys for SFTP location type
+	HostKey       = "host"
+	PortKey       = "port"
+	PathKey       = "path"
+	KnownHostsKey = "knownHosts"
+	// SFTP credential secret keys (stored separately from location secret)
+	UsernameKey   = "username"
+	PrivateKeyKey = "privateKey"
+	PasswordKey   = "password"
 
 	// Kopia Repository Server secret keys
 	RepoPasswordKey  = "repo-password"

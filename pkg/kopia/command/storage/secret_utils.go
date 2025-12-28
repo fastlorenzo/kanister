@@ -33,6 +33,11 @@ const (
 	azureStorageAccountEnv = "AZURE_STORAGE_ACCOUNT"
 	azureStorageKeyEnv     = "AZURE_STORAGE_KEY"
 	azureStorageDomainEnv  = "AZURE_STORAGE_DOMAIN"
+
+	// SFTP credentials environment variables
+	sftpUsernameEnv   = "SFTP_USERNAME"
+	sftpPasswordEnv   = "SFTP_PASSWORD"
+	sftpPrivateKeyEnv = "SFTP_PRIVATE_KEY"
 )
 
 func getBucketNameFromMap(m map[string][]byte) string {
@@ -72,9 +77,11 @@ func GenerateEnvSpecFromCredentialSecret(s *corev1.Secret, assumeRoleDurationS3 
 		return getEnvSpecForAWSCredentialSecret(s, assumeRoleDurationS3)
 	case secrets.AzureSecretType:
 		return getEnvSpecForAzureCredentialSecret(s)
+	case secrets.SFTPSecretType:
+		return getEnvSpecForSFTPCredentialSecret(s)
 	}
 	// We only need to set the environment variables in cases where
-	// secret type is AWS or Azure.
+	// secret type is AWS, Azure, or SFTP.
 	return nil, nil
 }
 
@@ -117,6 +124,26 @@ func getEnvSpecForAzureCredentialSecret(s *corev1.Secret) ([]corev1.EnvVar, erro
 		// TODO : Check how we can set this env to use value from secret
 		envVars = append(envVars, getEnvVar(azureStorageDomainEnv, blobDomain))
 	}
+	return envVars, nil
+}
+
+func getEnvSpecForSFTPCredentialSecret(s *corev1.Secret) ([]corev1.EnvVar, error) {
+	envVars := []corev1.EnvVar{}
+	envVars = append(
+		envVars,
+		getEnvVarWithSecretRef(sftpUsernameEnv, s.Name, secrets.SFTPUsername),
+	)
+
+	// Add password if present
+	if _, ok := s.Data[secrets.SFTPPassword]; ok && len(s.Data[secrets.SFTPPassword]) > 0 {
+		envVars = append(envVars, getEnvVarWithSecretRef(sftpPasswordEnv, s.Name, secrets.SFTPPassword))
+	}
+
+	// Add private key if present
+	if _, ok := s.Data[secrets.SFTPPrivateKey]; ok && len(s.Data[secrets.SFTPPrivateKey]) > 0 {
+		envVars = append(envVars, getEnvVarWithSecretRef(sftpPrivateKeyEnv, s.Name, secrets.SFTPPrivateKey))
+	}
+
 	return envVars, nil
 }
 

@@ -41,4 +41,8 @@ var (
 	ErrInvalidContainerName = errkit.NewSentinelErr("container name cannot be empty")
 	// ErrInvalidServerURL is returned when the serverURL is empty.
 	ErrInvalidServerURL = errkit.NewSentinelErr("server URL cannot be empty")
+	// ErrInvalidHostname is returned when the hostname is empty.
+	ErrInvalidHostname = errkit.NewSentinelErr("hostname cannot be empty")
+	// ErrInvalidUsername is returned when the username is empty.
+	ErrInvalidUsername = errkit.NewSentinelErr("username cannot be empty")
 )

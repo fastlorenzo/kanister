@@ -271,6 +271,7 @@ const (
   LocationTypeGCS         LocationType = "gcs"
   LocationTypeS3Compliant LocationType = "s3Compliant"
   LocationTypeAzure       LocationType = "azure"
+  LocationTypeSFTP        LocationType = "sftp"
 )
 
 // Location

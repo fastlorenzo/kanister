@@ -121,6 +121,30 @@ func (s *LocationSuite) TestLocation(c *check.C) {
 				IsPITSupported: false,
 			},
 		},
+		{
+			name: "Test No PIT Support for SFTP",
+			location: internal.Location{
+				rs.TypeKey: []byte(rs.LocTypeSFTP),
+			},
+			expected: expected{
+				Type:           "sftp",
+				IsPITSupported: false,
+			},
+		},
+		{
+			name: "Test SFTP with all fields",
+			location: internal.Location{
+				rs.TypeKey:       []byte(rs.LocTypeSFTP),
+				rs.HostKey:       []byte("sftp.example.com"),
+				rs.PortKey:       []byte("2222"),
+				rs.PathKey:       []byte("/backup"),
+				rs.KnownHostsKey: []byte("/keys/known_hosts"),
+			},
+			expected: expected{
+				Type:           "sftp",
+				IsPITSupported: false,
+			},
+		},
 	}
 	for _, test := range tests {
 		c.Check(test.location.Type(), check.Equals, test.expected.Type)

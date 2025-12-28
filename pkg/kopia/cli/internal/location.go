@@ -70,3 +70,23 @@ func (l Location) IsPointInTypeSupported() bool {
 		return false
 	}
 }
+
+// SFTPHost returns the SFTP host.
+func (l Location) SFTPHost() string {
+	return string(l[rs.HostKey])
+}
+
+// SFTPPort returns the SFTP port.
+func (l Location) SFTPPort() string {
+	return string(l[rs.PortKey])
+}
+
+// SFTPPath returns the SFTP path.
+func (l Location) SFTPPath() string {
+	return string(l[rs.PathKey])
+}
+
+// SFTPKnownHosts returns the SFTP known_hosts file content.
+func (l Location) SFTPKnownHosts() string {
+	return string(l[rs.KnownHostsKey])
+}

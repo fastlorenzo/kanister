@@ -27,6 +27,9 @@ import (
 // ValidateCredentials returns error if secret is failed at validation.
 // Currently supports following:
 // - AWS typed secret with required AWS secret fields.
+// - Azure typed secret with required Azure secret fields.
+// - GCP typed secret with required GCP secret fields.
+// - SFTP typed secret with required SFTP secret fields.
 func ValidateCredentials(secret *corev1.Secret) error {
 	if secret == nil {
 		return errkit.New("Nil secret")
@@ -38,6 +41,8 @@ func ValidateCredentials(secret *corev1.Secret) error {
 		return ValidateAzureCredentials(secret)
 	case GCPSecretType:
 		return ValidateGCPCredentials(secret)
+	case SFTPSecretType:
+		return ValidateSFTPCredentials(secret)
 	case FilestoreSecretType:
 		// returning nil currently since we
 		// dont need credentials for file store

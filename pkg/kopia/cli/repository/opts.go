@@ -28,6 +28,7 @@ import (
 	"github.com/kanisterio/kanister/pkg/kopia/cli/repository/storage/fs"
 	"github.com/kanisterio/kanister/pkg/kopia/cli/repository/storage/gcs"
 	"github.com/kanisterio/kanister/pkg/kopia/cli/repository/storage/s3"
+	"github.com/kanisterio/kanister/pkg/kopia/cli/repository/storage/sftp"
 	"github.com/kanisterio/kanister/pkg/log"
 	rs "github.com/kanisterio/kanister/pkg/secrets/repositoryserver"
 )
@@ -80,6 +81,7 @@ var storageBuilders = map[rs.LocType]storageBuilder{
 	rs.LocTypeS3:          s3.New,
 	rs.LocTypes3Compliant: s3.New,
 	rs.LocTypeGCS:         gcs.New,
+	rs.LocTypeSFTP:        sftp.New,
 }
 
 // optStorage creates a list of options for the specified storage location.
